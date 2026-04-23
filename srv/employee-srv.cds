@@ -24,6 +24,14 @@ annotate EmployeeService.Employee with @(
             $Type: 'UI.DataField',
             Value: DEPARTMENT
         },
+        {
+            $Type: 'UI.DataField',
+            Value: SALARY
+        },
+         {
+            $Type: 'UI.DataField',
+            Value: STATUS
+        },
     ],
     FieldGroup #BasicData: {
         $Type: 'UI.FieldGroupType',
@@ -42,6 +50,16 @@ annotate EmployeeService.Employee with @(
                 $Type: 'UI.DataField',
                 Value: DEPARTMENT,
                 Label: 'Department'
+            },
+            {
+                $Type: 'UI.DataField',
+                Value: SALARY,
+                Label: 'Salary'
+            },
+            {
+                $Type: 'UI.DataField',
+                Value: STATUS,
+                Label: 'Status'
             }
         ]
     },
