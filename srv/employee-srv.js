@@ -1,22 +1,42 @@
 const cds = require('@sap/cds');
 
-class EmployeeService extends cds.ApplicationService{
+class EmployeeService extends cds.ApplicationService {
 
-    init(){
+    init() {
 
-        const {Employee} = this.entities;
-        this.before(['CREATE','UPDATE'],Employee,this.checkValidation);
+        const { Employee } = this.entities;
+
+        this.before(['CREATE', 'UPDATE'], Employee, this.checkValidation);
+        this.before('DELETE', Employee, this.checkDeleteValidation);
+
         return super.init();
     }
 
-    checkValidation(req){
+    checkValidation(req) {
 
-        const{NAME,EMAIL_ID} = req.data;
+        const { NAME, EMAIL_ID } = req.data;
 
-        if(!NAME || !EMAIL_ID){
-            req.error('Name and Email Id Can not be empty!');
+        // Empty validation
+        if (!NAME || !EMAIL_ID) {
+            req.error(400, 'Name and Email Id cannot be empty!');
+        }
+
+        // Email format validation
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        if (EMAIL_ID && !emailRegex.test(EMAIL_ID)) {
+            req.error(400, 'Invalid Email Format!');
+        }
+    }
+
+    checkDeleteValidation(req) {
+
+        const { DEPARTMENT } = req.data;
+
+        if (!DEPARTMENT) {
+            req.error(400, 'Department empty!');
         }
     }
 }
 
-module.exports = {EmployeeService}
+module.exports = { EmployeeService };
